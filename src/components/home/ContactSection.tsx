@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Container } from '../ui/Container';
 import { SectionTitle } from '../ui/SectionTitle';
 import { Button } from '../ui/Button';
-import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, AlertCircle } from 'lucide-react';
+import { sanitizeInput, isValidEmail, formRateLimiter, generateCSRFToken } from '../../utils/security';
 
 export const ContactSection: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+    csrfToken: generateCSRFToken()
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
   const contactInfo = [
     {
       icon: <MapPin className="h-6 w-6" />,
@@ -48,9 +60,99 @@ export const ContactSection: React.FC = () => {
     },
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    // Validate name
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters';
+    }
+
+    // Validate email
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!isValidEmail(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    // Validate subject
+    if (!formData.subject.trim()) {
+      newErrors.subject = 'Subject is required';
+    }
+
+    // Validate message
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = 'Message must be at least 10 characters';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    const sanitizedValue = sanitizeInput(value);
+    
+    setFormData(prev => ({
+      ...prev,
+      [name]: sanitizedValue
+    }));
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // This would handle form submission logic
+    
+    // Rate limiting check
+    const clientId = 'contact-form'; // In a real app, use IP or user ID
+    if (!formRateLimiter.isAllowed(clientId)) {
+      setErrors({ form: 'Too many attempts. Please wait before submitting again.' });
+      return;
+    }
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      // Simulate form submission (replace with actual API call)
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // In a real application, send data to your backend
+      console.log('Form submitted:', {
+        ...formData,
+        timestamp: new Date().toISOString()
+      });
+
+      setSubmitStatus('success');
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+        csrfToken: generateCSRFToken()
+      });
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
+      setErrors({ form: 'Failed to send message. Please try again.' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -106,6 +208,7 @@ export const ContactSection: React.FC = () => {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title="DFFRNT Office Location"
+                sandbox="allow-scripts allow-same-origin"
               ></iframe>
             </div>
           </motion.div>
@@ -119,8 +222,22 @@ export const ContactSection: React.FC = () => {
             <form
               onSubmit={handleSubmit}
               className="bg-secondary-900 p-8 rounded-xl"
+              noValidate
             >
               <h3 className="text-2xl font-bold mb-6">Send Us a Message</h3>
+
+              {submitStatus === 'success' && (
+                <div className="mb-6 p-4 bg-green-600/20 border border-green-600/30 rounded-lg">
+                  <p className="text-green-400">Message sent successfully! We'll get back to you soon.</p>
+                </div>
+              )}
+
+              {errors.form && (
+                <div className="mb-6 p-4 bg-red-600/20 border border-red-600/30 rounded-lg flex items-center">
+                  <AlertCircle className="w-5 h-5 text-red-400 mr-2" />
+                  <p className="text-red-400">{errors.form}</p>
+                </div>
+              )}
 
               <div className="space-y-6">
                 <motion.div
@@ -133,16 +250,24 @@ export const ContactSection: React.FC = () => {
                     htmlFor="name"
                     className="block text-sm font-medium text-gray-300 mb-2"
                   >
-                    Your Name
+                    Your Name *
                   </label>
                   <input
                     type="text"
                     id="name"
                     name="name"
-                    className="w-full px-4 py-3 bg-secondary-800 border border-secondary-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 bg-secondary-800 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white ${
+                      errors.name ? 'border-red-500' : 'border-secondary-700'
+                    }`}
                     placeholder="John Doe"
                     required
+                    maxLength={100}
                   />
+                  {errors.name && (
+                    <p className="mt-1 text-sm text-red-400">{errors.name}</p>
+                  )}
                 </motion.div>
 
                 <motion.div
@@ -155,16 +280,24 @@ export const ContactSection: React.FC = () => {
                     htmlFor="email"
                     className="block text-sm font-medium text-gray-300 mb-2"
                   >
-                    Your Email
+                    Your Email *
                   </label>
                   <input
                     type="email"
                     id="email"
                     name="email"
-                    className="w-full px-4 py-3 bg-secondary-800 border border-secondary-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 bg-secondary-800 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white ${
+                      errors.email ? 'border-red-500' : 'border-secondary-700'
+                    }`}
                     placeholder="john@example.com"
                     required
+                    maxLength={255}
                   />
+                  {errors.email && (
+                    <p className="mt-1 text-sm text-red-400">{errors.email}</p>
+                  )}
                 </motion.div>
 
                 <motion.div
@@ -177,16 +310,24 @@ export const ContactSection: React.FC = () => {
                     htmlFor="subject"
                     className="block text-sm font-medium text-gray-300 mb-2"
                   >
-                    Subject
+                    Subject *
                   </label>
                   <input
                     type="text"
                     id="subject"
                     name="subject"
-                    className="w-full px-4 py-3 bg-secondary-800 border border-secondary-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white"
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 bg-secondary-800 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white ${
+                      errors.subject ? 'border-red-500' : 'border-secondary-700'
+                    }`}
                     placeholder="How can we help you?"
                     required
+                    maxLength={200}
                   />
+                  {errors.subject && (
+                    <p className="mt-1 text-sm text-red-400">{errors.subject}</p>
+                  )}
                 </motion.div>
 
                 <motion.div
@@ -199,17 +340,31 @@ export const ContactSection: React.FC = () => {
                     htmlFor="message"
                     className="block text-sm font-medium text-gray-300 mb-2"
                   >
-                    Your Message
+                    Your Message *
                   </label>
                   <textarea
                     id="message"
                     name="message"
                     rows={4}
-                    className="w-full px-4 py-3 bg-secondary-800 border border-secondary-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 bg-secondary-800 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white resize-vertical ${
+                      errors.message ? 'border-red-500' : 'border-secondary-700'
+                    }`}
                     placeholder="Tell us about your project..."
                     required
+                    maxLength={1000}
                   ></textarea>
+                  {errors.message && (
+                    <p className="mt-1 text-sm text-red-400">{errors.message}</p>
+                  )}
                 </motion.div>
+
+                <input
+                  type="hidden"
+                  name="csrfToken"
+                  value={formData.csrfToken}
+                />
 
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
@@ -221,8 +376,18 @@ export const ContactSection: React.FC = () => {
                     type="submit"
                     variant="primary"
                     className="w-full flex justify-center"
+                    disabled={isSubmitting}
                   >
-                    <Send className="w-5 h-5 mr-2" /> Send Message
+                    {isSubmitting ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-secondary-950 mr-2"></div>
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-5 h-5 mr-2" /> Send Message
+                      </>
+                    )}
                   </Button>
                 </motion.div>
               </div>
