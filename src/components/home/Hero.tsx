@@ -46,7 +46,7 @@ export const Hero: React.FC = () => {
           radius: Math.random() * 2 + 1,
           vx: (Math.random() - 0.5) * 0.5,
           vy: (Math.random() - 0.5) * 0.5,
-          color: `rgba(212, 175, 55, ${Math.random() * 0.5 + 0.1})` // Gold with varying opacity
+          color: `rgba(220, 38, 38, ${Math.random() * 0.5 + 0.1})` // Red with varying opacity
         });
       }
     }
@@ -81,7 +81,7 @@ export const Hero: React.FC = () => {
           
           if (distance < 100) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(212, 175, 55, ${0.1 - distance / 1000})`;
+            ctx.strokeStyle = `rgba(220, 38, 38, ${0.1 - distance / 1000})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particleA.x, particleA.y);
             ctx.lineTo(particleB.x, particleB.y);

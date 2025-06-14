@@ -5,18 +5,18 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#D4AF37', // Gold
-          50: '#FCF7E6',
-          100: '#F9F0CC',
-          200: '#F2E199',
-          300: '#EBD266',
-          400: '#E4C333',
-          500: '#D4AF37', // Base Gold
-          600: '#B08E20',
-          700: '#8C6E19',
-          800: '#684F12',
-          900: '#44300B',
-          950: '#221805',
+          DEFAULT: '#DC2626', // Red
+          50: '#FEF2F2',
+          100: '#FEE2E2',
+          200: '#FECACA',
+          300: '#FCA5A5',
+          400: '#F87171',
+          500: '#EF4444',
+          600: '#DC2626', // Base Red
+          700: '#B91C1C',
+          800: '#991B1B',
+          900: '#7F1D1D',
+          950: '#450A0A',
         },
         secondary: {
           DEFAULT: '#0F0F0F', // Black
