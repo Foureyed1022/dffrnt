@@ -17,7 +17,7 @@ export const teamMembers: TeamMember[] = [
     ],
     socialLinks: {
       linkedin: 'https://linkedin.com',
-      twitter: 'https://twitter.com',
+      twitter: 'https://x.com/McMapopa97?t=r5DDLPwKvFEGtAxcyuvdhA&s=08',
     },
   },
   {
