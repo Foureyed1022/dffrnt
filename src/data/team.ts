@@ -36,7 +36,7 @@ export const teamMembers: TeamMember[] = [
     ],
     socialLinks: {
       linkedin: 'https://linkedin.com',
-      instagram: 'https://instagram.com',
+      instagram: 'https://www.instagram.com/brandon_chizaa?igsh=dnJ5bGo5aDI0dng0',
     },
   },
   {
