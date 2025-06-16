@@ -72,8 +72,8 @@ export const teamMembers: TeamMember[] = [
       'Art Direction',
     ],
     socialLinks: {
-      linkedin: 'https://linkedin.com',
-      instagram: 'https://instagram.com',
+      linkedin: 'https://www.linkedin.com/in/hastings-wassali-92b478236',
+      instagram: 'https://www.instagram.com/invites/contact/?igsh=erbpfsafgdzt&utm_content=qljmjqg',
     },
   },
   {
