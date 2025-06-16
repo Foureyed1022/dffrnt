@@ -41,7 +41,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     id: 3,
-    name: 'Alinafe (Arche)',
+    name: 'Alinafe (Acreke)',
     position: 'Production Director',
     bio: 'With a keen eye for detail and exceptional organizational skills, Alinafe coordinates all elements of physical and digital production. Their expertise ensures seamless project execution and high-quality deliverables across all media projects.',
     image:
