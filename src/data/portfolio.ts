@@ -31,7 +31,7 @@ export const portfolioItems: PortfolioItem[] = [
       'Figma',
       'WordPress',
       'React',
-      'TailwindCSS'
+      'TailwindCSS',
       'Next.js'
     ]
   },
