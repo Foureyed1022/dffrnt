@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
+import { ChatWidget } from './components/chat/ChatWidget';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
@@ -11,6 +12,8 @@ import Team from './pages/Team';
 import Contact from './pages/Contact';
 
 function App() {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   return (
     <Router>
       <Header />
@@ -26,6 +29,12 @@ function App() {
         </Routes>
       </main>
       <Footer />
+      
+      {/* Live Chat Widget */}
+      <ChatWidget 
+        isOpen={isChatOpen} 
+        onToggle={() => setIsChatOpen(!isChatOpen)} 
+      />
     </Router>
   );
 }
