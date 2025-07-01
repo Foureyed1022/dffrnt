@@ -24,7 +24,7 @@ export const Logo: React.FC<LogoProps> = ({
         <img 
           src="/DFFRNT LTD LOGO OFF PNG.png" 
           alt="DFFRNT" 
-          className="h-10 w-auto"
+          className="h-12 w-auto"
         />
       </motion.div>
     </Link>
