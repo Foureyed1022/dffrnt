@@ -11,8 +11,6 @@ export const Logo: React.FC<LogoProps> = ({
   variant = 'light',
   className = '' 
 }) => {
-  const textColor = variant === 'light' ? 'text-white' : 'text-secondary-950';
-  
   return (
     <Link to="/">
       <motion.div 
@@ -23,11 +21,11 @@ export const Logo: React.FC<LogoProps> = ({
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        <h1 className={`text-2xl font-bold ${textColor}`}>
-          DFF
-          <span className="text-primary transform -scale-x-100 inline-block">R</span>
-          NT
-        </h1>
+        <img 
+          src="/DFFRNT LTD LOGO OFF PNG.png" 
+          alt="DFFRNT" 
+          className="h-10 w-auto"
+        />
       </motion.div>
     </Link>
   );
