@@ -19,16 +19,16 @@ export const TeamSection: React.FC = () => {
         />
         
         <div className="mt-16">
-          <div className="flex overflow-x-auto pb-8 space-x-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {teamMembers.map((member) => (
               <motion.div
                 key={member.id}
-                className="flex-none w-72 group cursor-pointer"
+                className="group cursor-pointer"
                 onClick={() => setSelectedMember(member)}
                 whileHover={{ y: -10 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="relative h-96 overflow-hidden rounded-lg mb-4">
+                <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-4">
                   <img 
                     src={member.image} 
                     alt={member.name}
@@ -37,8 +37,8 @@ export const TeamSection: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-secondary-950 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
                   
                   <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h4 className="text-white text-lg font-bold">{member.name}</h4>
-                    <p className="text-primary text-sm">{member.position}</p>
+                    <h4 className="text-white text-base font-bold truncate">{member.name}</h4>
+                    <p className="text-primary text-xs line-clamp-2">{member.position}</p>
                     <p className="text-gray-300 text-sm mt-2">{member.department}</p>
                   </div>
                 </div>
