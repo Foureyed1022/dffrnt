@@ -10,7 +10,7 @@ export const TeamSection: React.FC = () => {
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
 
   return (
-    <section id="team" className="py-20 bg-white">
+    <section id="team" className="py-20 bg-white dark:bg-gray-900">
       <Container>
         <SectionTitle 
           title="Our Leadership Team" 
@@ -63,12 +63,13 @@ export const TeamSection: React.FC = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white dark:bg-gray-900 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
               onClick={e => e.stopPropagation()}
             >
               <div className="relative">
                 <button
                   onClick={() => setSelectedMember(null)}
-                  className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                  className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                 >
                   <X size={24} />
                 </button>
@@ -129,22 +130,23 @@ export const TeamSection: React.FC = () => {
 
                   <div>
                     <h3 className="text-2xl font-bold text-secondary-950 mb-2">
+                    <h3 className="text-2xl font-bold text-secondary-950 dark:text-white mb-2">
                       {selectedMember.name}
                     </h3>
                     <p className="text-primary font-medium mb-2">{selectedMember.position}</p>
-                    <p className="text-gray-500 mb-6">{selectedMember.department}</p>
+                    <p className="text-gray-500 dark:text-gray-400 mb-6">{selectedMember.department}</p>
                     
                     <div className="prose prose-lg">
-                      <p className="text-gray-600 mb-6">{selectedMember.bio}</p>
+                      <p className="text-gray-600 dark:text-gray-300 mb-6">{selectedMember.bio}</p>
                     </div>
 
                     <div className="space-y-4">
-                      <h4 className="font-semibold text-secondary-950">Areas of Expertise</h4>
+                      <h4 className="font-semibold text-secondary-950 dark:text-white">Areas of Expertise</h4>
                       <div className="flex flex-wrap gap-2">
                         {selectedMember.expertise.map((skill, index) => (
                           <span 
                             key={index}
-                            className="bg-gray-100 text-secondary-950 px-3 py-1 rounded-full text-sm"
+                            className="bg-gray-100 dark:bg-gray-700 text-secondary-950 dark:text-gray-200 px-3 py-1 rounded-full text-sm"
                           >
                             {skill}
                           </span>

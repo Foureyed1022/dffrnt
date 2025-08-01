@@ -40,7 +40,7 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({
   return (
     <div className={`mb-12 ${centered ? 'text-center' : ''}`}>
       <motion.h2 
-        className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${light ? 'text-white' : 'text-secondary-950'}`}
+        className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${light ? 'text-white' : 'text-secondary-950 dark:text-white'}`}
         variants={container}
         initial="hidden"
         animate="visible"
@@ -58,7 +58,7 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({
       
       {subtitle && (
         <motion.p 
-          className={`text-lg md:text-xl max-w-3xl ${centered ? 'mx-auto' : ''} ${light ? 'text-gray-300' : 'text-gray-600'}`}
+          className={`text-lg md:text-xl max-w-3xl ${centered ? 'mx-auto' : ''} ${light ? 'text-gray-300' : 'text-gray-600 dark:text-gray-300'}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}

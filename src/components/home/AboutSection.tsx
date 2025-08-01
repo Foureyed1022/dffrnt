@@ -39,7 +39,7 @@ export const AboutSection: React.FC = () => {
   };
 
   return (
-    <section id="about" className="py-20 bg-white">
+    <section id="about" className="py-20 bg-white dark:bg-gray-900">
       <Container>
         <SectionTitle
           title="About DFFRNT"
@@ -65,7 +65,7 @@ export const AboutSection: React.FC = () => {
 
           <div>
             <motion.h3
-              className="text-2xl font-bold mb-4 text-secondary-950"
+              className="text-2xl font-bold mb-4 text-secondary-950 dark:text-white"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -75,7 +75,7 @@ export const AboutSection: React.FC = () => {
             </motion.h3>
 
             <motion.p
-              className="text-gray-700 mb-6"
+              className="text-gray-700 dark:text-gray-300 mb-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.5 }}
@@ -92,7 +92,7 @@ export const AboutSection: React.FC = () => {
             </motion.p>
 
             <motion.p
-              className="text-gray-700 mb-10"
+              className="text-gray-700 dark:text-gray-300 mb-10"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
@@ -119,10 +119,10 @@ export const AboutSection: React.FC = () => {
                     {feature.icon}
                   </div>
                   <div>
-                    <h4 className="text-lg font-semibold text-secondary-950 mb-1">
+                    <h4 className="text-lg font-semibold text-secondary-950 dark:text-white mb-1">
                       {feature.title}
                     </h4>
-                    <p className="text-gray-600">{feature.description}</p>
+                    <p className="text-gray-600 dark:text-gray-400">{feature.description}</p>
                   </div>
                 </motion.div>
               ))}

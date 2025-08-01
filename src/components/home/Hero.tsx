@@ -140,12 +140,12 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center text-white">
+    <div className="relative min-h-screen flex items-center text-white dark:text-gray-100">
       {/* Background Canvas for 3D effect */}
       <canvas 
         ref={canvasRef} 
         className="absolute inset-0 w-full h-full z-0"
-        style={{ backgroundColor: '#0F0F0F' }}
+        style={{ backgroundColor: 'var(--hero-bg)' }}
       />
       
       {/* Content */}
@@ -162,7 +162,7 @@ export const Hero: React.FC = () => {
           </motion.h1>
           
           <motion.p 
-            className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-10"
+            className="text-lg sm:text-xl md:text-2xl text-gray-300 dark:text-gray-400 mb-10"
             variants={subtitleVariants}
             initial="hidden"
             animate="visible"

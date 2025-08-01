@@ -5,6 +5,7 @@ import { Menu, X } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 import { Container } from '../ui/Container';
 import { Button } from '../ui/Button';
+import { ThemeToggle } from '../ui/ThemeToggle';
 
 const navItems = [
   { name: 'Home', path: '/' },
@@ -72,13 +73,14 @@ export const Header: React.FC = () => {
                   `text-sm font-medium transition duration-300 ease-in-out border-b-2 ${
                     isActive 
                       ? 'text-primary border-primary' 
-                      : 'text-white border-transparent hover:text-primary hover:border-primary'
+                      : 'text-white dark:text-gray-200 border-transparent hover:text-primary hover:border-primary'
                   }`
                 }
               >
                 {item.name}
               </NavLink>
             ))}
+            <ThemeToggle />
             <Button 
               variant="primary" 
               size="sm"
@@ -90,7 +92,7 @@ export const Header: React.FC = () => {
           
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-white"
+            className="md:hidden text-white dark:text-gray-200"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -107,23 +109,27 @@ export const Header: React.FC = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-secondary-950 border-t border-gray-800"
+            className="md:hidden bg-secondary-950 dark:bg-gray-900 border-t border-gray-800 dark:border-gray-700"
           >
             <Container>
-              <div className="py-4 space-y-3">
+              <div className="py-4 space-y-3 flex flex-col">
                 {navItems.map((item) => (
                   <NavLink
                     key={item.name}
                     to={item.path}
                     className={({ isActive }) => 
                       `block py-2 px-4 text-base font-medium ${
-                        isActive ? 'text-primary' : 'text-white hover:text-primary'
+                        isActive ? 'text-primary' : 'text-white dark:text-gray-200 hover:text-primary'
                       }`
                     }
                   >
                     {item.name}
                   </NavLink>
                 ))}
+                <div className="flex items-center justify-between px-4 py-2">
+                  <span className="text-white dark:text-gray-200 text-sm">Theme</span>
+                  <ThemeToggle />
+                </div>
                 <div className="pt-2 pb-4">
                   <Button 
                     variant="primary" 

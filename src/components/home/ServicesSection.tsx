@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 
 export const ServicesSection: React.FC = () => {
   return (
-    <section id="services" className="py-20 bg-gray-50">
+    <section id="services" className="py-20 bg-gray-50 dark:bg-gray-800">
       <Container>
         <SectionTitle 
           title="Our Services" 

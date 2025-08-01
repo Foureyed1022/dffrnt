@@ -51,7 +51,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, index }) => {
   return (
     <motion.div
       ref={ref}
-      className="bg-white rounded-xl overflow-hidden shadow-lg h-full"
+      className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg h-full"
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       variants={cardVariants}
@@ -69,12 +69,12 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, index }) => {
           {iconComponents[service.icon as keyof typeof iconComponents]}
         </motion.div>
         
-        <h3 className="text-xl font-bold mb-3 text-secondary-950">{service.title}</h3>
-        <p className="text-gray-600 mb-6">{service.description}</p>
+        <h3 className="text-xl font-bold mb-3 text-secondary-950 dark:text-white">{service.title}</h3>
+        <p className="text-gray-600 dark:text-gray-300 mb-6">{service.description}</p>
         
         <ul className="space-y-2">
           {service.features.map((feature, i) => (
-            <li key={i} className="flex items-center text-gray-700">
+            <li key={i} className="flex items-center text-gray-700 dark:text-gray-300">
               <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>
               {feature}
             </li>
