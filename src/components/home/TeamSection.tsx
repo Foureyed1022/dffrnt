@@ -62,7 +62,6 @@ export const TeamSection: React.FC = () => {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
               className="bg-white dark:bg-gray-900 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
               onClick={e => e.stopPropagation()}
             >
@@ -129,7 +128,6 @@ export const TeamSection: React.FC = () => {
                   </div>
 
                   <div>
-                    <h3 className="text-2xl font-bold text-secondary-950 mb-2">
                     <h3 className="text-2xl font-bold text-secondary-950 dark:text-white mb-2">
                       {selectedMember.name}
                     </h3>
